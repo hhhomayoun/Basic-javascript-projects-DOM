@@ -88,7 +88,7 @@ const menu = [
 
 
 
-// get parent element
+// // get parent element
 const sectionCenter = document.querySelector(".section-center");
 const btnContainer = document.querySelector(".btn-container");
 // display all items when page loads
@@ -159,3 +159,6 @@ function displayMenuButtons() {
     });
   });
 }
+
+
+
