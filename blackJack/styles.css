@@ -1,0 +1,43 @@
+body{
+ margin: 0;
+ height: 500px;
+ width: 100%;
+ display: flex;
+justify-content: center;
+align-items: center;
+ 
+}
+
+.player-card{
+ font-size: 3rem;
+ width: 10rem;
+ height:20rem;
+ border: 2px solid black;
+display: flex;
+justify-content: center;
+align-items: center;
+ position: relative;
+ 
+}
+.player-card.red{
+ color: red;
+}
+.player-card.black{
+ color: black;
+}
+
+.player-card::before,.player-card::after{
+ position:absolute;
+ content: attr(data-value);
+ font-size: 1rem;
+
+}
+.player-card::before{
+ top:.5rem;
+ left:.5rem;
+}
+.player-card::after{
+ bottom:.5rem;
+ right:.5rem;
+ transform: rotate(180deg);
+}
