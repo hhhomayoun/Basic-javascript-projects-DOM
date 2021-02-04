@@ -1,23 +1,53 @@
 body{
  margin: 0;
- height: 500px;
- width: 100%;
- display: flex;
+ padding: 0;
+box-sizing: border-box;
+
+}
+.hero{
+  background-color: rgb(111, 131, 111);
+height: 100vh;
+display: flex;
 justify-content: center;
 align-items: center;
- 
 }
-
+.pc-section{
+ background-color: rgb(197, 61, 61);
+ width: 90vw;
+ height: 40vh;
+ margin: 0 auto;
+}
+.player-section{
+ background-color:rgb(57, 109, 144);
+ width: 90vw;
+ height: 40vh;
+ margin: 0 auto;
+}
+.player-slot{
+ display: grid;
+ grid-template-columns: repeat(10,1fr);
+}
+.pc-slot{
+ display: grid;
+ grid-template-columns: repeat(10,1fr);
+}
+.result-info{
+ display: flex;
+ align-items: baseline;
+}
+/* card styleeeees */
 .player-card{
+ background-color: rgba(255, 255, 255, 0.945);
+ border-radius: 0.5rem;
  font-size: 3rem;
- width: 10rem;
- height:20rem;
+ width: 8rem;
+ height:12rem;
  border: 2px solid black;
 display: flex;
 justify-content: center;
 align-items: center;
  position: relative;
- 
+ margin: 1rem;
 }
 .player-card.red{
  color: red;
