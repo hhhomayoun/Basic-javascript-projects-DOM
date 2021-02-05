@@ -78,8 +78,8 @@ btn.addEventListener('click', () => {
 
  total += CARD_VALUE_MAP[deck[1].getValue()]
 
- getPlayerCard()
-
+ // getPlayerCard()
+ deck.splice(1, 1)
  if ((aceChecker.indexOf('A') !== -1) && total > 21) {
   total = total - 10
   aceChecker.splice(aceChecker.indexOf('A'), 1)
@@ -120,8 +120,14 @@ deal.addEventListener('click', function () {
  getPlayerCard()
  getPlayerCard()
  // getPlayerCard()
+ console.log(deck);
+ console.log(pcTotalHiden);
  if (pcTotalHiden === 21) {
-  dealerTotal.textContent = `dealer hsa 21`
+  dealerSlot.removeChild(unfliped)
+  dealerSlot.appendChild(deck[3].getHTML())
+
+  dealerTotal.textContent = `dealer has 21`;
+  return;
  }
  dealerTotal.textContent = pcTotal;
  playerTotal.textContent = total;
@@ -130,6 +136,29 @@ deal.addEventListener('click', function () {
 const stayBtn = document.querySelector('.btn-stay');
 stayBtn.addEventListener('click', function () {
  dealerSlot.removeChild(unfliped)
+ dealerSlot.appendChild(deck[0].getHTML())
+ pcTotal += CARD_VALUE_MAP[deck[0].getValue()]
+ getPlayerCard()
+ while (pcTotal < 17) {
+  dealerAceChecker.push(deck[0].getValue())
+  dealerSlot.appendChild(deck[0].getHTML())
+  pcTotal += CARD_VALUE_MAP[deck[0].getValue()]
+  getPlayerCard()
+  if ((dealerAceChecker.indexOf('A') !== -1) && pcTotal > 21) {
+   pcTotal = pcTotal - 10
+   dealerAceChecker.splice(dealerAceChecker.indexOf('A'), 1)
+
+  } else {
+   pcTotal = pcTotal;
+  }
+  if (pcTotal > 21) {
+   dealerTotal.textContent = `${pcTotal} dealer bust`;
+   // break;
+   return
+  }
+ }
+
+ dealerTotal.textContent = pcTotal;
 })
 
 
