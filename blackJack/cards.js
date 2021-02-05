@@ -88,7 +88,15 @@ btn.addEventListener('click', () => {
   total = total;
  }
 
-
+ if (total === 21) {
+  playerTotal.textContent = `${total} player has 21`;
+  return
+ } else if (total > 21) {
+  playerTotal.textContent = `${total} player bust`;
+  return
+ } else {
+  total = total;
+ }
  console.log(aceChecker);
  console.log(deck)
 
@@ -157,8 +165,17 @@ stayBtn.addEventListener('click', function () {
    return
   }
  }
-
- dealerTotal.textContent = pcTotal;
+ if (pcTotal > total) {
+  dealerTotal.textContent = `${pcTotal} dealer has won`;
+  playerTotal.textContent = `you have ${total},sorry you lost dealer has ${pcTotal}`;
+ } else if (total > pcTotal) {
+  dealerTotal.textContent = `${pcTotal} dealer lost`;
+  playerTotal.textContent = `nice you have ${total}, you won`;
+ } else {
+  dealerTotal.textContent = `you both have ${pcTotal},draw`;
+  playerTotal.textContent = `you both have ${total},draw`;
+ }
+ // dealerTotal.textContent = pcTotal;
 })
 
 
