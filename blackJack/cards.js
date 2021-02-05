@@ -59,6 +59,8 @@ const CARD_VALUE_MAP = {
 }
 
 let total = 0;
+let pcTotal = 0;
+let pcTotalHiden = 0;
 let aceChecker = [];
 const playerSlot = document.querySelector('.player-slot');
 const playerTotal = document.querySelector('.total')
@@ -69,12 +71,12 @@ btn.addEventListener('click', () => {
  // deck = []
  // createDeck()
  // shuffle(1, 52)
- let cardValue = deck[0].getValue()
+ let cardValue = deck[1].getValue()
  aceChecker.push(cardValue)
  console.log(aceChecker);
- playerSlot.appendChild(deck[0].getHTML())
+ playerSlot.appendChild(deck[1].getHTML())
 
- total += CARD_VALUE_MAP[deck[0].getValue()]
+ total += CARD_VALUE_MAP[deck[1].getValue()]
 
  getPlayerCard()
 
@@ -95,6 +97,8 @@ btn.addEventListener('click', () => {
 const deal = document.querySelector('.btn-deal')
 const dealerSlot = document.querySelector('.pc-slot')
 const dealerTotal = document.querySelector('.dealer-total')
+
+const unfliped = document.createElement('div')
 let dealerAceChecker = []
 deal.addEventListener('click', function () {
  aceChecker.push(deck[0].getValue())
@@ -102,17 +106,33 @@ deal.addEventListener('click', function () {
  aceChecker.push(deck[2].getValue())
  dealerAceChecker.push(deck[3].getValue())
  playerSlot.appendChild(deck[0].getHTML())
- playerSlot.appendChild(deck[2].getHTML())
  dealerSlot.appendChild(deck[1].getHTML())
- dealerSlot.appendChild(deck[3].getHTML())
+ playerSlot.appendChild(deck[2].getHTML())
+ // dealerSlot.appendChild(deck[3].getHTML())
+
+ dealerSlot.appendChild(unfliped)
+ unfliped.classList.add('unfliped-card')
 
  total += (CARD_VALUE_MAP[deck[0].getValue()] + CARD_VALUE_MAP[deck[2].getValue()])
+ pcTotalHiden += (CARD_VALUE_MAP[deck[1].getValue()] + CARD_VALUE_MAP[deck[3].getValue()])
+ pcTotal += (CARD_VALUE_MAP[deck[1].getValue()])
  getPlayerCard()
  getPlayerCard()
  getPlayerCard()
- getPlayerCard()
+ // getPlayerCard()
+ if (pcTotalHiden === 21) {
+  dealerTotal.textContent = `dealer hsa 21`
+ }
+ dealerTotal.textContent = pcTotal;
  playerTotal.textContent = total;
 })
+
+const stayBtn = document.querySelector('.btn-stay');
+stayBtn.addEventListener('click', function () {
+ dealerSlot.removeChild(unfliped)
+})
+
+
 function getPlayerCard() {
  deck.shift()
 }

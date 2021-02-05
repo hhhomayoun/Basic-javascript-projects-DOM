@@ -35,6 +35,18 @@ align-items: center;
  display: flex;
  align-items: baseline;
 }
+/* unfliped carddddd */
+.unfliped-card{
+ 
+ border: 2px solid black;
+ width: 8rem;
+ height: 12rem;
+ background-color: rgb(195, 190, 190);
+ display: grid;
+ place-items: center;
+ margin: 1rem;
+ border-radius: 0.5rem;
+}
 /* card styleeeees */
 .player-card{
  background-color: rgba(255, 255, 255, 0.945);
