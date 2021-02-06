@@ -1,3 +1,4 @@
+// values = ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']
 values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 suits = ['♥', '♦', '♠', '♣']
 deck = [];
@@ -61,11 +62,22 @@ const CARD_VALUE_MAP = {
 let total = 0;
 let pcTotal = 0;
 let pcTotalHiden = 0;
+
 let aceChecker = [];
 const playerSlot = document.querySelector('.player-slot');
 const playerTotal = document.querySelector('.total')
 
 const btn = document.querySelector('.btn');
+const deal = document.querySelector('.btn-deal')
+const stayBtn = document.querySelector('.btn-stay');
+const nextHandBtn = document.querySelector('.btn-next-hand')
+// loading page
+window.addEventListener('DOMContentLoaded', () => {
+ btn.setAttribute('disabled', 'disabled')
+ stayBtn.setAttribute('disabled', 'disabled')
+ nextHandBtn.setAttribute('disabled', 'disabled')
+})
+
 btn.addEventListener('click', () => {
  // playerSlot.innerHTML = ''
  // deck = []
@@ -102,13 +114,17 @@ btn.addEventListener('click', () => {
 
  playerTotal.textContent = total;
 })
-const deal = document.querySelector('.btn-deal')
+
 const dealerSlot = document.querySelector('.pc-slot')
 const dealerTotal = document.querySelector('.dealer-total')
 
 const unfliped = document.createElement('div')
 let dealerAceChecker = []
 deal.addEventListener('click', function () {
+ deal.setAttribute('disabled', 'disabled')
+ btn.removeAttribute('disabled')
+ stayBtn.removeAttribute('disabled')
+
  aceChecker.push(deck[0].getValue())
  dealerAceChecker.push(deck[1].getValue())
  aceChecker.push(deck[2].getValue())
@@ -122,6 +138,13 @@ deal.addEventListener('click', function () {
  unfliped.classList.add('unfliped-card')
 
  total += (CARD_VALUE_MAP[deck[0].getValue()] + CARD_VALUE_MAP[deck[2].getValue()])
+ if ((aceChecker.indexOf('A') !== -1) && total > 21) {
+  total = total - 10
+  aceChecker.splice(aceChecker.indexOf('A'), 1)
+
+ } else {
+  total = total;
+ }
  pcTotalHiden += (CARD_VALUE_MAP[deck[1].getValue()] + CARD_VALUE_MAP[deck[3].getValue()])
  pcTotal += (CARD_VALUE_MAP[deck[1].getValue()])
  getPlayerCard()
@@ -130,6 +153,11 @@ deal.addEventListener('click', function () {
  // getPlayerCard()
  console.log(deck);
  console.log(pcTotalHiden);
+
+ if (total === 21) {
+  playerTotal.textContent = `${total} black jack congrats`;
+  return
+ }
  if (pcTotalHiden === 21) {
   dealerSlot.removeChild(unfliped)
   dealerSlot.appendChild(deck[3].getHTML())
@@ -137,16 +165,27 @@ deal.addEventListener('click', function () {
   dealerTotal.textContent = `dealer has 21`;
   return;
  }
+
+
  dealerTotal.textContent = pcTotal;
  playerTotal.textContent = total;
 })
 
-const stayBtn = document.querySelector('.btn-stay');
+
 stayBtn.addEventListener('click', function () {
+ btn.setAttribute('disabled', 'disabled')
+
  dealerSlot.removeChild(unfliped)
  dealerSlot.appendChild(deck[0].getHTML())
  pcTotal += CARD_VALUE_MAP[deck[0].getValue()]
  getPlayerCard()
+ if ((dealerAceChecker.indexOf('A') !== -1) && pcTotal > 21) {
+  pcTotal = pcTotal - 10
+  dealerAceChecker.splice(dealerAceChecker.indexOf('A'), 1)
+
+ } else {
+  pcTotal = pcTotal;
+ }
  while (pcTotal < 17) {
   dealerAceChecker.push(deck[0].getValue())
   dealerSlot.appendChild(deck[0].getHTML())
@@ -175,6 +214,8 @@ stayBtn.addEventListener('click', function () {
   dealerTotal.textContent = `you both have ${pcTotal},draw`;
   playerTotal.textContent = `you both have ${total},draw`;
  }
+ console.log(deck.length);
+
  // dealerTotal.textContent = pcTotal;
 })
 
