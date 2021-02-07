@@ -80,6 +80,7 @@ window.addEventListener('DOMContentLoaded', () => {
  nextHandBtn.setAttribute('disabled', 'disabled')
 })
 
+// hit btn///////
 btn.addEventListener('click', () => {
 
  let cardValue = deck[1].getValue()
@@ -133,6 +134,8 @@ const dealerTotal = document.querySelector('.dealer-total')
 
 const unfliped = document.createElement('div')
 let dealerAceChecker = []
+
+// deal btn //////
 deal.addEventListener('click', function () {
  deal.setAttribute('disabled', 'disabled')
  btn.removeAttribute('disabled')
@@ -200,7 +203,7 @@ deal.addEventListener('click', function () {
  playerTotal.textContent = total;
 })
 
-
+// stay btn /////
 stayBtn.addEventListener('click', function () {
  btn.setAttribute('disabled', 'disabled')
 
@@ -233,7 +236,7 @@ stayBtn.addEventListener('click', function () {
   } else {
    pcTotal = pcTotal;
   }
-  // next hand btnnnnn
+
 
   console.log(cardsRemaining);
   deckLength.textContent = cardsRemaining;
@@ -263,7 +266,7 @@ function getPlayerCard() {
  deck.shift()
 }
 
-
+// play next hand btn /////
 nextHandBtn.addEventListener('click', () => {
  if (cardsRemaining < 20) {
   deck = []
