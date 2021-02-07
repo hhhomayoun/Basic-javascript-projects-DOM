@@ -1,4 +1,4 @@
-// values = ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']
+// values = ['K', 'K', 'K', 'K', 'K', 'K', 'A', 'A', 'A', 'A', 'A', 'A', 'A']
 values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 suits = ['♥', '♦', '♠', '♣']
 deck = [];
@@ -58,13 +58,15 @@ const CARD_VALUE_MAP = {
  "K": 10,
  "A": 11
 }
-
+let cardsRemaining = deck.length
 let total = 0;
 let pcTotal = 0;
 let pcTotalHiden = 0;
 
 let aceChecker = [];
 const playerSlot = document.querySelector('.player-slot');
+const dealerSlot = document.querySelector('.pc-slot')
+let deckLength = document.querySelector('.deck-length')
 const playerTotal = document.querySelector('.total')
 
 const btn = document.querySelector('.btn');
@@ -92,6 +94,7 @@ btn.addEventListener('click', () => {
 
  // getPlayerCard()
  deck.splice(1, 1)
+ cardsRemaining--;
  if ((aceChecker.indexOf('A') !== -1) && total > 21) {
   total = total - 10
   aceChecker.splice(aceChecker.indexOf('A'), 1)
@@ -101,21 +104,34 @@ btn.addEventListener('click', () => {
  }
 
  if (total === 21) {
-  playerTotal.textContent = `${total} player has 21`;
+  playerTotal.textContent = `${total}, nice you have 21 you win`;
+  btn.setAttribute('disabled', 'disabled')
+  stayBtn.setAttribute('disabled', 'disabled')
+  nextHandBtn.removeAttribute('disabled')
+  getPlayerCard()
+  cardsRemaining--
+  deckLength.textContent = cardsRemaining;
   return
  } else if (total > 21) {
-  playerTotal.textContent = `${total} player bust`;
+  btn.setAttribute('disabled', 'disabled')
+  stayBtn.setAttribute('disabled', 'disabled')
+  nextHandBtn.removeAttribute('disabled')
+  getPlayerCard()
+  cardsRemaining--
+  deckLength.textContent = cardsRemaining;
+  playerTotal.textContent = `${total} player bust, sorry you lost`;
   return
  } else {
   total = total;
  }
- console.log(aceChecker);
- console.log(deck)
-
+ console.log(`aceChecker ${aceChecker}`);
+ console.log(`deck fater hit ${deck}`)
+ console.log(`cardsRemaining after hit ${cardsRemaining}`);
+ deckLength.textContent = cardsRemaining;
  playerTotal.textContent = total;
 })
 
-const dealerSlot = document.querySelector('.pc-slot')
+
 const dealerTotal = document.querySelector('.dealer-total')
 
 const unfliped = document.createElement('div')
@@ -148,25 +164,41 @@ deal.addEventListener('click', function () {
  pcTotalHiden += (CARD_VALUE_MAP[deck[1].getValue()] + CARD_VALUE_MAP[deck[3].getValue()])
  pcTotal += (CARD_VALUE_MAP[deck[1].getValue()])
  getPlayerCard()
+ cardsRemaining--
  getPlayerCard()
+ cardsRemaining--
  getPlayerCard()
+ cardsRemaining--
  // getPlayerCard()
- console.log(deck);
- console.log(pcTotalHiden);
+ console.log(`deck after deal ${deck}`);
+ console.log(`pcTotalHiden after deal ${pcTotalHiden}`);
 
  if (total === 21) {
-  playerTotal.textContent = `${total} black jack congrats`;
+  playerTotal.textContent = `${total} black jack congrats you win`;
+  getPlayerCard()
+  cardsRemaining--
+  btn.setAttribute('disabled', 'disabled')
+  stayBtn.setAttribute('disabled', 'disabled')
+  nextHandBtn.removeAttribute('disabled')
+
+  deckLength.textContent = cardsRemaining;
   return
  }
  if (pcTotalHiden === 21) {
   dealerSlot.removeChild(unfliped)
-  dealerSlot.appendChild(deck[3].getHTML())
-
-  dealerTotal.textContent = `dealer has 21`;
+  dealerSlot.appendChild(deck[0].getHTML())
+  getPlayerCard()
+  cardsRemaining--
+  dealerTotal.textContent = `sorry dealer has 21,you lost`;
+  btn.setAttribute('disabled', 'disabled')
+  stayBtn.setAttribute('disabled', 'disabled')
+  nextHandBtn.removeAttribute('disabled')
+  deckLength.textContent = cardsRemaining;
   return;
  }
 
-
+ console.log(`cards remoaning after deal ${cardsRemaining}`);
+ deckLength.textContent = cardsRemaining;
  dealerTotal.textContent = pcTotal;
  playerTotal.textContent = total;
 })
@@ -175,10 +207,15 @@ deal.addEventListener('click', function () {
 stayBtn.addEventListener('click', function () {
  btn.setAttribute('disabled', 'disabled')
 
+ stayBtn.setAttribute('disabled', 'disabled')
+ nextHandBtn.removeAttribute('disabled')
+
  dealerSlot.removeChild(unfliped)
  dealerSlot.appendChild(deck[0].getHTML())
  pcTotal += CARD_VALUE_MAP[deck[0].getValue()]
  getPlayerCard()
+ cardsRemaining--
+ deckLength.textContent = cardsRemaining;
  if ((dealerAceChecker.indexOf('A') !== -1) && pcTotal > 21) {
   pcTotal = pcTotal - 10
   dealerAceChecker.splice(dealerAceChecker.indexOf('A'), 1)
@@ -191,6 +228,7 @@ stayBtn.addEventListener('click', function () {
   dealerSlot.appendChild(deck[0].getHTML())
   pcTotal += CARD_VALUE_MAP[deck[0].getValue()]
   getPlayerCard()
+  cardsRemaining--
   if ((dealerAceChecker.indexOf('A') !== -1) && pcTotal > 21) {
    pcTotal = pcTotal - 10
    dealerAceChecker.splice(dealerAceChecker.indexOf('A'), 1)
@@ -198,9 +236,14 @@ stayBtn.addEventListener('click', function () {
   } else {
    pcTotal = pcTotal;
   }
+  // next hand btnnnnn
+
+  console.log(cardsRemaining);
+  deckLength.textContent = cardsRemaining;
+
   if (pcTotal > 21) {
-   dealerTotal.textContent = `${pcTotal} dealer bust`;
-   // break;
+   dealerTotal.textContent = `${pcTotal} dealer bust,dealer lost`;
+   playerTotal.textContent = `${total} dealer bust, you won`;
    return
   }
  }
@@ -214,7 +257,6 @@ stayBtn.addEventListener('click', function () {
   dealerTotal.textContent = `you both have ${pcTotal},draw`;
   playerTotal.textContent = `you both have ${total},draw`;
  }
- console.log(deck.length);
 
  // dealerTotal.textContent = pcTotal;
 })
@@ -224,3 +266,45 @@ function getPlayerCard() {
  deck.shift()
 }
 
+
+nextHandBtn.addEventListener('click', () => {
+ if (cardsRemaining < 20) {
+  deck = []
+  aceChecker = []
+  dealerAceChecker = []
+  createDeck()
+  shuffle(0, 51)
+  cardsRemaining = 52
+  playerSlot.innerHTML = '';
+  dealerSlot.innerHTML = '';
+  pcTotal = 0;
+  total = 0;
+  pcTotalHiden = 0
+  console.log(pcTotalHiden);
+  console.log(deck);
+  deckLength.textContent = cardsRemaining;
+  dealerTotal.textContent = pcTotal;
+  playerTotal.textContent = total;
+  btn.setAttribute('disabled', 'disabled')
+  stayBtn.setAttribute('disabled', 'disabled')
+  nextHandBtn.setAttribute('disabled', 'disabled')
+  deal.removeAttribute('disabled')
+ } else {
+  playerSlot.innerHTML = '';
+  dealerSlot.innerHTML = '';
+  aceChecker = []
+  dealerAceChecker = []
+  pcTotal = 0;
+  total = 0;
+  pcTotalHiden = 0;
+  console.log(pcTotalHiden);
+  console.log(aceChecker, dealerAceChecker);
+  deckLength.textContent = cardsRemaining;
+  dealerTotal.textContent = pcTotal;
+  playerTotal.textContent = total;
+  btn.setAttribute('disabled', 'disabled')
+  stayBtn.setAttribute('disabled', 'disabled')
+  nextHandBtn.setAttribute('disabled', 'disabled')
+  deal.removeAttribute('disabled')
+ }
+})

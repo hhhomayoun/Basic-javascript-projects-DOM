@@ -17,11 +17,20 @@ align-items: center;
  height: 40vh;
  margin: 0 auto;
 }
+.pc-section p{
+  padding-left: 0.5rem;
+  margin: 0;
+}
 .player-section{
  background-color:rgb(57, 109, 144);
  width: 90vw;
  height: 40vh;
  margin: 0 auto;
+ 
+}
+.player-section p{
+  margin: 0;
+  padding-left: 0.5rem;
 }
 .player-slot{
  display: grid;
@@ -34,6 +43,7 @@ align-items: center;
 .result-info{
  display: flex;
  align-items: baseline;
+ padding-left: 0.5rem;
 }
 /* unfliped carddddd */
 .unfliped-card{
@@ -46,6 +56,27 @@ align-items: center;
  place-items: center;
  margin: 1rem;
  border-radius: 0.5rem;
+}
+/* btns general styles */
+.button{
+  font-size: 1.5rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  text-transform: capitalize;
+}
+/* player section */
+.player-section{
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+.pc-section{
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+/* result info */
+.result-info{
+  font-size: 1.5rem;
+  text-transform: capitalize;
 }
 /* card styleeeees */
 .player-card{
