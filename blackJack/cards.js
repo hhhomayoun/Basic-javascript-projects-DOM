@@ -81,10 +81,7 @@ window.addEventListener('DOMContentLoaded', () => {
 })
 
 btn.addEventListener('click', () => {
- // playerSlot.innerHTML = ''
- // deck = []
- // createDeck()
- // shuffle(1, 52)
+
  let cardValue = deck[1].getValue()
  aceChecker.push(cardValue)
  console.log(aceChecker);
