@@ -103,6 +103,7 @@ btn.addEventListener('click', () => {
 
  if (total === 21) {
   playerTotal.textContent = `${total}, nice you have 21 you win`;
+  dealerTotal.textContent = `${pcTotal}`;
   btn.setAttribute('disabled', 'disabled')
   stayBtn.setAttribute('disabled', 'disabled')
   nextHandBtn.removeAttribute('disabled')
@@ -118,6 +119,7 @@ btn.addEventListener('click', () => {
   cardsRemaining--
   deckLength.textContent = cardsRemaining;
   playerTotal.textContent = `${total} player bust, sorry you lost`;
+  dealerTotal.textContent = `${pcTotal} dealer wins`;
   return
  } else {
   total = total;
@@ -163,6 +165,7 @@ deal.addEventListener('click', function () {
  }
  pcTotalHiden += (CARD_VALUE_MAP[deck[1].getValue()] + CARD_VALUE_MAP[deck[3].getValue()])
  pcTotal += (CARD_VALUE_MAP[deck[1].getValue()])
+
  getPlayerCard()
  cardsRemaining--
  getPlayerCard()
@@ -175,6 +178,7 @@ deal.addEventListener('click', function () {
 
  if (total === 21) {
   playerTotal.textContent = `${total} black jack congrats you win`;
+  dealerTotal.textContent = `${pcTotal}`;
   getPlayerCard()
   cardsRemaining--
   btn.setAttribute('disabled', 'disabled')
@@ -189,7 +193,8 @@ deal.addEventListener('click', function () {
   dealerSlot.appendChild(deck[0].getHTML())
   getPlayerCard()
   cardsRemaining--
-  dealerTotal.textContent = `sorry dealer has 21,you lost`;
+  dealerTotal.textContent = `${pcTotalHiden},blackJack dealer wins`;
+  playerTotal.textContent = `${total}, you lost dealer has 21`;
   btn.setAttribute('disabled', 'disabled')
   stayBtn.setAttribute('disabled', 'disabled')
   nextHandBtn.removeAttribute('disabled')
@@ -243,16 +248,16 @@ stayBtn.addEventListener('click', function () {
 
   if (pcTotal > 21) {
    dealerTotal.textContent = `${pcTotal} dealer bust,dealer lost`;
-   playerTotal.textContent = `${total} dealer bust, you won`;
+   playerTotal.textContent = `${total} you win, dealer bust`;
    return
   }
  }
  if (pcTotal > total) {
-  dealerTotal.textContent = `${pcTotal} dealer has won`;
-  playerTotal.textContent = `you have ${total},sorry you lost dealer has ${pcTotal}`;
+  dealerTotal.textContent = `${pcTotal} dealer wins`;
+  playerTotal.textContent = `${total} you lost dealer has ${pcTotal}`;
  } else if (total > pcTotal) {
   dealerTotal.textContent = `${pcTotal} dealer lost`;
-  playerTotal.textContent = `nice you have ${total}, you won`;
+  playerTotal.textContent = `${total} you win`;
  } else {
   dealerTotal.textContent = `you both have ${pcTotal},draw`;
   playerTotal.textContent = `you both have ${total},draw`;

@@ -5,14 +5,15 @@ box-sizing: border-box;
 
 }
 .hero{
-  background-color: rgb(111, 131, 111);
+  background-color: rgb(103, 153, 103);
 height: 100vh;
 display: flex;
 justify-content: center;
 align-items: center;
 }
 .pc-section{
- background-color: rgb(197, 61, 61);
+ background-color: rgb(206, 50, 50);
+
  width: 90vw;
  height: 40vh;
  margin: 0 auto;
